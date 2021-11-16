@@ -6,7 +6,7 @@ public class Machine {
     private char y1;
     private  char y2;
     private String answer;
-    private int t;//такт автомата для задачи у2 S2
+    private int t;//такт автомата для задачи
     private boolean state;
 
     public Machine(String[][] table, char y1, char y2) {
