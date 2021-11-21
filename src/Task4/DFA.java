@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public class DFA {
     private String[][] T;//Таблица переходов
+    private String[][] result;
     private ArrayList<String> oldEq;
     private ArrayList<String> newEq;
 
@@ -34,8 +35,36 @@ public class DFA {
         }
         System.out.println();
         System.out.println();
+        result = new String[oldEq.size()+1][T[0].length];
+        for (int i = 0; i < T[0].length; i++) {
+            result[0][i] = T[0][i];
+        }
+        for (int i = 1; i < result.length; i++) {
+            result[i][0] = oldEq.get(i-1);
+        }
+        for (int i = 1; i < result.length; i++) {
+            result[i][1] = buildAutomata(result[i][0], 1);
+            result[i][2] = buildAutomata(result[i][0], 2);;
+        }
 
+        for (int i = 0; i < result.length; i++) {
+            System.out.println();
+            for (int j = 0; j < result[0].length; j++) {
+                System.out.print(result[i][j]+" ");
+            }
+        }
     }
+
+    private String buildAutomata(String classEq, int index){
+        String state = Character.toString(classEq.charAt(0));
+        for (int i = 0; i < T.length; i++) {
+            if (T[i][0].equals(state)){
+                return T[i][index];
+            }
+        }
+        return null;
+    }
+
     private boolean equals(){
         Collections.sort(oldEq);
         Collections.sort(newEq);
